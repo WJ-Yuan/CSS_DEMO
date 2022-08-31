@@ -1,6 +1,6 @@
 # CSS_DEMO
 
-**个人CSS练习的一些小demo**
+**Some Personal Css Demo**
 
 [中文](README.md) | ENG
 
