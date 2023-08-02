@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      :root {
+        --left: calc(50vw - 300px);
+        --right: calc(50vw + 300px);
+      }
+
+      #move-shell {
+        position: absolute;
+        display: block;
+        background: transparent;
+        transform: translate(var(--left), 250px);
+      }
+
+      #move {
+        display: inline-block;
+        position: relative;
+        background-color: aqua;
+      }
+
+      .circle {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 100px;
+      }
+
+      .left {
+        transform: translate(var(--left), 250px) !important;
+      }
+
+      .right-to-left {
+        animation: right-to-left 1s ease-in-out;
+      }
+
+      .right {
+        transform: translate(var(--right), 250px) !important;
+      }
+
+      .left-to-right {
+        animation: left-to-right 1s ease-out;
+      }
+
+      @keyframes left-to-right {
+        0% {
+          transform: translate(-600px, 0) rotate(0);
+        }
+
+        100% {
+          transform: translate(0, 0) rotate(360deg);
+        }
+      }
+
+      @keyframes right-to-left {
+        0% {
+          transform: translate(600px, 0) rotate(0);
+        }
+
+        100% {
+          transform: translate(0, 0) rotate(-360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="move-shell" class="circle">
+      <div id="move" class="circle"> test </div>
+    </div>
+
+    <script>
+      const moveShell = document.querySelector('#move-shell');
+      const move = document.querySelector('#move');
+      const body = document.querySelector('body');
+      const width = body.clientWidth;
+      let position = 'left';
+      let timer;
+      window.addEventListener('pointermove', (e) => {
+        const { clientX } = e;
+        const isRight = clientX > width / 2;
+
+        if (isRight && position !== 'right') {
+          moveShell.classList.remove('left');
+          moveShell.classList.add('right');
+          move.classList.remove('right-to-left');
+          move.classList.add('left-to-right');
+          position = 'right';
+        } else if (!isRight && position !== 'left') {
+          moveShell.classList.remove('right');
+          moveShell.classList.add('left');
+          move.classList.remove('left-to-right');
+          move.classList.add('right-to-left');
+          position = 'left';
+        }
+      });
+
+      // TODO: 如何实现小球滚动到一半鼠标位置改变时让他滚动回去 - 猜测思路需要靠 JS 实现精细动画效果
+
+      function silentRollBall(mode = 'left-to-right') {
+        let startX;
+        let startDeg;
+        let func;
+
+        switch (mode) {
+          case 'left-to-right':
+            startX = -600;
+            startDeg = -360;
+            func = () => {
+              if (startX === 0) {
+                cancelAnimationFrame(timer);
+                timer = null;
+                return;
+              }
+              startX += 20;
+              startDeg += 12;
+              move.setAttribute(
+                'style',
+                `transform: translate(${startX}px, 0) rotate(${startDeg}deg)`,
+              );
+              requestAnimationFrame(func);
+            };
+            timer = requestAnimationFrame(func);
+            break;
+          case 'right-to-left':
+            break;
+          default:
+            throw Error('unexcept mode');
+        }
+      }
+    </script>
+  </body>
+</html>
