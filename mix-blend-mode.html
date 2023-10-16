@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .mb-50 {
+        margin-bottom: 50px;
+      }
+      ul {
+        display: flex;
+        justify-content: flex-start;
+        width: 95%;
+        flex-wrap: wrap;
+      }
+
+      li {
+        list-style: none;
+      }
+
+      .demo-block {
+        height: 220px;
+        width: 200px;
+      }
+
+      .bg {
+        height: 150px;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .title {
+        height: 20px;
+        line-height: 20px;
+        font-size: 18px;
+        font-weight: 600;
+        width: 100%;
+        text-align: center;
+      }
+
+      .circle {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        opacity: 1;
+      }
+
+      .color1 {
+        position: absolute;
+        transform: translateX(-25%);
+        background-color: blue;
+      }
+
+      .color2 {
+        position: absolute;
+        transform: translateX(25%);
+        background-color: green;
+      }
+
+      .color3 {
+        position: absolute;
+        transform: translateY(-45%);
+        background-color: red;
+      }
+    </style>
+
+    <style>
+      .hello-demo-bg {
+        height: 200px;
+        width: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        vertical-align: middle;
+        background: lightblue;
+        background-size: cover;
+      }
+
+      .hello-demo-bg .transparent-text {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000;
+        mix-blend-mode: screen;
+        width: 100%;
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+      }
+    </style>
+
+    <style>
+      .spotlight-demo {
+        width: 500px;
+        height: 200px;
+        position: relative;
+      }
+
+      .scene {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: yellowgreen;
+      }
+
+      .spotlight {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: radial-gradient(
+          circle at var(--x, 50%) var(--y, 50%),
+          hsl(70, 80%, 80%) 10%,
+          rgba(0, 0, 0, 0.96) 30%
+        );
+        mix-blend-mode: multiply;
+        cursor: pointer;
+      }
+
+      .text {
+        font-size: 32px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 class="mb-50">All Mode</h2>
+    <div>
+      <ul> </ul>
+    </div>
+    <script>
+      const ul = document.querySelectorAll('ul')[0];
+      const generateLi = (type) => {
+        return `
+        <li class="demo-block">
+          <div class="bg ${type}">
+            <div class="color1 circle" style="mix-blend-mode: ${type}"></div>
+            <div class="color2 circle" style="mix-blend-mode: ${type}"></div>
+            <div class="color3 circle" style="mix-blend-mode: ${type}"></div>
+          </div>
+          <div class="title">${type}</div>
+        </li>`;
+      };
+
+      const modeTypes = [
+        'normal',
+        'multiply',
+        'screen',
+        'darken',
+        'lighten',
+        'overlay',
+        'color-dodge',
+        'color-burn',
+        'hard-light',
+        'soft-light',
+        'difference',
+        'exclusion',
+        'hue',
+        'saturation',
+        'color',
+        'luminosity',
+        'initial',
+        'inherit',
+        'unset',
+      ];
+      const inner = modeTypes.forEach((type) => {
+        ul.innerHTML += generateLi(type);
+      });
+    </script>
+
+    <h2>Hello World</h2>
+    <div class="hello-demo-bg">
+      <div class="transparent-text">Hello World</div>
+    </div>
+
+    <h2 id="anchor">Spotlight</h2>
+    <div class="spotlight-demo">
+      <div class="scene">
+        <div class="text">Text</div>
+      </div>
+      <div class="spotlight"></div>
+    </div>
+    <script>
+      const spotlight = document.querySelector('.spotlight');
+
+      function move(e) {
+        const wrap = document.querySelector('#anchor');
+        const baseX = wrap.getBoundingClientRect().x;
+        const baseY = wrap.getBoundingClientRect().y;
+        if (e.clientX) {
+          spotlight.style.setProperty('--x', e.clientX - baseX + 'px');
+          spotlight.style.setProperty(
+            '--y',
+            e.clientY - baseY - 32 - 40 + 'px',
+          );
+        }
+      }
+
+      if (window.PointerEvent) {
+        spotlight.addEventListener('pointermove', move);
+      } else {
+        spotlight.addEventListener('touchmove', move);
+        spotlight.addEventListener('mousemove', move);
+      }
+    </script>
+  </body>
+</html>
