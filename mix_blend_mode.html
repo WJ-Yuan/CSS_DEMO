@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Some mix-blend-mode Demos</title>
     <style>
       .mb-50 {
         margin-bottom: 50px;
@@ -130,10 +130,10 @@
   <body>
     <h2 class="mb-50">All Mode</h2>
     <div>
-      <ul> </ul>
+      <ul></ul>
     </div>
     <script>
-      const ul = document.querySelectorAll('ul')[0];
+      const ul = document.querySelectorAll("ul")[0];
       const generateLi = (type) => {
         return `
         <li class="demo-block">
@@ -147,25 +147,25 @@
       };
 
       const modeTypes = [
-        'normal',
-        'multiply',
-        'screen',
-        'darken',
-        'lighten',
-        'overlay',
-        'color-dodge',
-        'color-burn',
-        'hard-light',
-        'soft-light',
-        'difference',
-        'exclusion',
-        'hue',
-        'saturation',
-        'color',
-        'luminosity',
-        'initial',
-        'inherit',
-        'unset',
+        "normal",
+        "multiply",
+        "screen",
+        "darken",
+        "lighten",
+        "overlay",
+        "color-dodge",
+        "color-burn",
+        "hard-light",
+        "soft-light",
+        "difference",
+        "exclusion",
+        "hue",
+        "saturation",
+        "color",
+        "luminosity",
+        "initial",
+        "inherit",
+        "unset",
       ];
       const inner = modeTypes.forEach((type) => {
         ul.innerHTML += generateLi(type);
@@ -185,26 +185,26 @@
       <div class="spotlight"></div>
     </div>
     <script>
-      const spotlight = document.querySelector('.spotlight');
+      const spotlight = document.querySelector(".spotlight");
 
       function move(e) {
-        const wrap = document.querySelector('#anchor');
+        const wrap = document.querySelector("#anchor");
         const baseX = wrap.getBoundingClientRect().x;
         const baseY = wrap.getBoundingClientRect().y;
         if (e.clientX) {
-          spotlight.style.setProperty('--x', e.clientX - baseX + 'px');
+          spotlight.style.setProperty("--x", e.clientX - baseX + "px");
           spotlight.style.setProperty(
-            '--y',
-            e.clientY - baseY - 32 - 40 + 'px',
+            "--y",
+            e.clientY - baseY - 32 - 40 + "px"
           );
         }
       }
 
       if (window.PointerEvent) {
-        spotlight.addEventListener('pointermove', move);
+        spotlight.addEventListener("pointermove", move);
       } else {
-        spotlight.addEventListener('touchmove', move);
-        spotlight.addEventListener('mousemove', move);
+        spotlight.addEventListener("touchmove", move);
+        spotlight.addEventListener("mousemove", move);
       }
     </script>
   </body>
