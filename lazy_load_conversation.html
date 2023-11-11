@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lazy Load Chat</title>
+    <style>
+      #chatContent {
+        height: 400px;
+        overflow: auto;
+        border: 1px solid #ccc;
+        padding: 20px;
+      }
+      #loadingIndicator {
+        text-align: center;
+        margin-bottom: 10px; /* 添加 margin 使 loading 在内容上方 */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chatContent">
+      <div id="loadingIndicator">Loading...</div>
+      <!-- 初始显示的最后20条对话 -->
+      <!-- 请根据你的数据结构进行替换 -->
+    </div>
+
+    <script>
+      const chatContent = document.getElementById("chatContent");
+      const loadingIndicator = document.getElementById("loadingIndicator");
+
+      // 模拟全部对话信息
+      const allConversations = [...new Array(100)].map(
+        (_, index) => `Conversation ${index + 1}`
+      );
+
+      // 模拟每次加载的数量
+      const loadQuantity = 20;
+
+      // 初始加载最后20条对话
+      loadMoreChats();
+
+      // 创建 IntersectionObserver 实例
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target === loadingIndicator) {
+            // 用户滚动到顶部，显示loading并加载新的20条对话
+            setTimeout(() => {
+              loadMoreChats();
+            }, 1000);
+          }
+        });
+      });
+
+      // 将loadingIndicator与观察器连接
+      observer.observe(loadingIndicator);
+
+      // 模拟加载更多对话的函数
+      function loadMoreChats() {
+        // 插入新的对话
+
+        // 模拟从全部对话信息中获取新的20条对话
+        const startIndex = chatContent.children.length - 1;
+        const endIndex = startIndex + loadQuantity;
+        const newChats = allConversations.slice(startIndex, endIndex);
+        const fragment = document.createDocumentFragment();
+        newChats.forEach((chat) => {
+          const newChatElement = document.createElement("p");
+          newChatElement.textContent = chat;
+          fragment.insertBefore(newChatElement, fragment.children[0]);
+        });
+
+        if (chatContent.children.length === 1) {
+          chatContent.appendChild(fragment);
+        } else {
+          chatContent.insertBefore(fragment, chatContent.children[1]);
+        }
+
+        chatContent.children[newChats.length].scrollIntoView();
+        // 如果没有更多对话，停止观察loadingIndicator
+        if (endIndex >= allConversations.length) {
+          observer.unobserve(loadingIndicator);
+          chatContent.removeChild(loadingIndicator);
+        }
+      }
+    </script>
+  </body>
+</html>
