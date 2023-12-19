@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiple Borders</title>
+  </head>
+  <style>
+    body {
+      padding: 50px;
+    }
+
+    .box {
+      width: 200px;
+      height: 100px;
+      background: yellowgreen;
+    }
+
+    .mb-20 {
+      margin-bottom: 20px;
+    }
+
+    .mb-50 {
+      margin-bottom: 50px;
+    }
+
+    .shadow {
+      /* x 轴偏移量，y 轴偏移量，模糊半径，扩散半径，颜色 */
+      /* 可以在同一个元素上设置多个阴影效果，并用逗号将他们分隔开 */
+      box-shadow: 0 0 0 10px #655, 0 0 0 15px deeppink,
+        0 2px 5px 15px rgba(0, 0, 0, 0.6);
+    }
+
+    .outline {
+      /* 可以产生虚线效果，但是 outline 不适应于 border-radius，这是一个 bug */
+      border: 10px solid #655;
+      outline: 5px solid deeppink;
+    }
+
+    .outline-2 {
+      outline: 2px dashed white;
+      outline-offset: -10px;
+    }
+  </style>
+  <body>
+    <div class="mb-20"><label>box shadow border</label></div>
+    <div class="box shadow mb-50"></div>
+
+    <div class="mb-20"><label>outline border</label></div>
+    <div class="box outline mb-50"></div>
+
+    <!-- 描边 -->
+    <div class="mb-20"><label>outline with offset</label></div>
+    <div class="box outline-2"></div>
+  </body>
+</html>
