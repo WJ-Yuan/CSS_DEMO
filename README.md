@@ -9,3 +9,5 @@
 - [x] [表格](table.html)
 - [x] [mix-blend-mode 示例](mix_blend_mode.html)
 - [x] [对话框懒加载](lazy_load_conversation.html)
+- [x] [半透明边框](translucent_border.html)
+- [x] [多边框](multiple_borders.html)
