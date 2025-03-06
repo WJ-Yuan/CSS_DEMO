@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>progress</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      let raf;
+
+      function drawProgress(ctx, progress, clear) {
+        if (progress > 100 || progress < 0) {
+          cancelAnimationFrame(raf);
+          raf = undefined;
+          return;
+        }
+
+        if (raf !== undefined) {
+          clear();
+        }
+
+        ctx.fillStyle = "red";
+        ctx.fillRect(50, 10, progress, 10);
+
+        ctx.fillStyle = "black";
+        ctx.font = "14px Arial";
+        ctx.fillText(`${progress}%`, 10, 20);
+
+        raf = requestAnimationFrame(() =>
+          drawProgress(ctx, progress + 1, clear)
+        );
+      }
+
+      function main() {
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.height = 600;
+        canvas.width = 800;
+
+        const clearRect = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        };
+
+        drawProgress(ctx, 0, clearRect);
+      }
+
+      main();
+    </script>
+  </body>
+</html>

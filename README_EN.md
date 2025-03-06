@@ -11,3 +11,4 @@
 - [x] [A Lazy Load Chat Room](lazy_load_conversation.html)
 - [x] [Translucent Border](translucent_border.html)
 - [x] [Multiple Borders](multiple_borders.html)
+- [x] [Progress](canvas_progress.html)

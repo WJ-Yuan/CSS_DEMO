@@ -11,3 +11,4 @@
 - [x] [对话框懒加载](lazy_load_conversation.html)
 - [x] [半透明边框](translucent_border.html)
 - [x] [多边框](multiple_borders.html)
+- [x] [进度条](canvas_progress.html)
